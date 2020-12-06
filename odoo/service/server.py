@@ -17,7 +17,11 @@ import threading
 import time
 import unittest
 
-import psutil
+try:
+    import psutil
+except ImportError:
+    psutil = None
+
 import werkzeug.serving
 from werkzeug.debug import DebuggedApplication
 
@@ -366,7 +370,9 @@ class ThreadedServer(CommonServer):
             raise KeyboardInterrupt()
 
     def process_limit(self):
-        memory = memory_info(psutil.Process(os.getpid()))
+        memory = 0
+        if psutil:
+            memory = memory_info(psutil.Process(os.getpid()))
         if config['limit_memory_soft'] and memory > config['limit_memory_soft']:
             _logger.warning('Server memory limit (%s) reached.', memory)
             self.limits_reached_threads.add(threading.currentThread())
@@ -562,7 +568,9 @@ class GeventServer(CommonServer):
         if self.ppid != os.getppid():
             _logger.warning("LongPolling Parent changed", self.pid)
             restart = True
-        memory = memory_info(psutil.Process(self.pid))
+        memory = 0
+        if psutil:
+            memory = memory_info(psutil.Process(self.pid))
         if config['limit_memory_soft'] and memory > config['limit_memory_soft']:
             _logger.warning('LongPolling virtual memory limit reached: %s', memory)
             restart = True
@@ -933,7 +941,9 @@ class Worker(object):
             _logger.info("Worker (%d) max request (%s) reached.", self.pid, self.request_count)
             self.alive = False
         # Reset the worker if it consumes too much memory (e.g. caused by a memory leak).
-        memory = memory_info(psutil.Process(os.getpid()))
+        memory = 0
+        if psutil:
+            memory = memory_info(psutil.Process(os.getpid()))
         if config['limit_memory_soft'] and memory > config['limit_memory_soft']:
             _logger.info('Worker (%d) virtual memory limit (%s) reached.', self.pid, memory)
             self.alive = False      # Commit suicide after the request.
@@ -1095,7 +1105,9 @@ class WorkerCron(Worker):
             self.setproctitle(db_name)
             if rpc_request_flag:
                 start_time = time.time()
-                start_memory = memory_info(psutil.Process(os.getpid()))
+                start_memory = 0
+                if psutil:
+                    start_memory = memory_info(psutil.Process(os.getpid()))
 
             from odoo.addons import base
             base.models.ir_cron.ir_cron._acquire_job(db_name)
@@ -1105,7 +1117,9 @@ class WorkerCron(Worker):
                 odoo.sql_db.close_db(db_name)
             if rpc_request_flag:
                 run_time = time.time() - start_time
-                end_memory = memory_info(psutil.Process(os.getpid()))
+                end_memory = 0
+                if psutil:
+                    end_memory = memory_info(psutil.Process(os.getpid()))
                 vms_diff = (end_memory - start_memory) / 1024
                 logline = '%s time:%.3fs mem: %sk -> %sk (diff: %sk)' % \
                     (db_name, run_time, start_memory / 1024, end_memory / 1024, vms_diff)
