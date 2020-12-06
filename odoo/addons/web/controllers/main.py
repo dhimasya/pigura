@@ -1025,19 +1025,6 @@ class WebClient(http.Controller):
     def version_info(self):
         return odoo.service.common.exp_version()
 
-    @http.route('/web/tests', type='http', auth="user")
-    def test_suite(self, mod=None, **kwargs):
-        return request.render('web.qunit_suite')
-
-    @http.route('/web/tests/mobile', type='http', auth="none")
-    def test_mobile_suite(self, mod=None, **kwargs):
-        return request.render('web.qunit_mobile_suite')
-
-    @http.route('/web/benchmarks', type='http', auth="none")
-    def benchmarks(self, mod=None, **kwargs):
-        return request.render('web.benchmark_suite')
-
-
 class Proxy(http.Controller):
 
     @http.route('/web/proxy/post/<path:path>', type='http', auth='user', methods=['GET'])
@@ -1052,8 +1039,7 @@ class Proxy(http.Controller):
             query_string = request.httprequest.query_string
             client = Client(request.httprequest.app, BaseResponse)
             headers = {'X-Openerp-Session-Id': request.session.sid}
-            return client.post('/' + path, base_url=base_url, query_string=query_string,
-                               headers=headers, data=data)
+            return client.post('/' + path, base_url=base_url, query_string=query_string, headers=headers, data=data)
 
 class Database(http.Controller):
 
@@ -1251,17 +1237,6 @@ class Session(http.Controller):
     def check(self):
         request.session.check_security()
         return None
-
-    @http.route('/web/session/account', type='json', auth="user")
-    def account(self):
-        ICP = request.env['ir.config_parameter'].sudo()
-        params = {
-            'response_type': 'token',
-            'client_id': ICP.get_param('database.uuid') or '',
-            'state': json.dumps({'d': request.db, 'u': ICP.get_param('web.base.url')}),
-            'scope': 'userinfo',
-        }
-        return 'https://accounts.odoo.com/oauth2/auth?' + werkzeug.url_encode(params)
 
     @http.route('/web/session/destroy', type='json', auth="user")
     def destroy(self):

@@ -259,7 +259,6 @@
         <script type="text/javascript" src="/web/static/src/js/services/session.js"></script>
         <script type="text/javascript" src="/web/static/src/js/widgets/auto_complete.js"></script>
         <script type="text/javascript" src="/web/static/src/js/widgets/change_password.js"></script>
-        <script type="text/javascript" src="/web/static/src/js/tools/test_menus_loader.js"/>
         <script type="text/javascript" src="/web/static/src/js/tools/debug_manager_backend.js"></script>
         <script type="text/javascript" src="/web/static/src/js/tools/tools.js"></script>
         <script type="text/javascript" src="/web/static/src/js/widgets/data_export.js"></script>
@@ -280,7 +279,6 @@
         <script type="text/javascript" src="/web/static/src/js/widgets/dropdown_menu.js"></script>
         <script type="text/javascript" src="/web/static/src/js/widgets/pie_chart.js"></script>
         <script type="text/javascript" src="/web/static/src/js/widgets/ribbon.js"></script>
-        <script type="text/javascript" src="/web/static/src/js/apps.js"></script>
 
         <script type="text/javascript" src="/web/static/src/js/fields/abstract_field.js"></script>
         <script type="text/javascript" src="/web/static/src/js/fields/basic_fields.js"></script>
@@ -582,8 +580,6 @@
 
         <link type="text/css" rel="stylesheet" href="/web/static/lib/qunit/qunit-2.9.1.css"/>
         <script type="text/javascript" src="/web/static/lib/qunit/qunit-2.9.1.js"></script>
-        <script type="text/javascript" src="/web/static/tests/helpers/qunit_config.js"></script>
-        <script type="text/javascript" src="/web/static/tests/helpers/qunit_asserts.js"></script>
 
         <!-- add lazy-loaded libs to make tests synchronous -->
         <link rel="stylesheet" href="/web/static/lib/fullcalendar/css/fullcalendar.css"/>
@@ -619,206 +615,6 @@
                 display: inherit;
             }
         </style>
-
-        <script type="text/javascript" src="/web/static/tests/helpers/test_utils_create.js"></script>
-        <script type="text/javascript" src="/web/static/tests/helpers/test_utils_dom.js"></script>
-        <script type="text/javascript" src="/web/static/tests/helpers/test_utils_fields.js"></script>
-        <script type="text/javascript" src="/web/static/tests/helpers/test_utils_file.js"></script>
-        <script type="text/javascript" src="/web/static/tests/helpers/test_utils_form.js"></script>
-        <script type="text/javascript" src="/web/static/tests/helpers/test_utils_graph.js"></script>
-        <script type="text/javascript" src="/web/static/tests/helpers/test_utils_kanban.js"></script>
-        <script type="text/javascript" src="/web/static/tests/helpers/test_utils_mock.js"></script>
-        <script type="text/javascript" src="/web/static/tests/helpers/test_utils_modal.js"></script>
-        <script type="text/javascript" src="/web/static/tests/helpers/test_utils_pivot.js"></script>
-        <script type="text/javascript" src="/web/static/tests/helpers/test_utils.js"></script>
-        <script type="text/javascript" src="/web/static/tests/helpers/mock_server.js"></script>
-    </template>
-
-    <template id="web.qunit_suite">
-        <t t-call="web.layout">
-            <t t-set="html_data" t-value="{'style': 'height: 100%;'}"/>
-            <t t-set="title">Web Tests</t>
-            <t t-set="head">
-                <t t-call="web.js_tests_assets"/>
-
-                <script type="text/javascript" src="/base/static/tests/base_settings_tests.js"></script>
-
-                <script type="text/javascript" src="/web/static/tests/qweb_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/mockserver_tests.js"></script>
-
-                <script type="text/javascript" src="/web/static/tests/services/notification_service_tests.js"></script>
-
-                <script type="text/javascript" src="/web/static/tests/fields/basic_fields_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/fields/field_utils_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/fields/relational_fields_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/fields/relational_fields/field_many2many_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/fields/relational_fields/field_many2one_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/fields/relational_fields/field_one2many_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/fields/signature.js"></script>
-                <script type="text/javascript" src="/web/static/tests/fields/special_fields.js"></script>
-                <script type="text/javascript" src="/web/static/tests/fields/upgrade_fields_tests.js"></script>
-
-                <script type="text/javascript" src="/web/static/tests/views/abstract_controller_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/views/abstract_view_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/views/control_panel_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/views/form_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/views/graph_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/views/list_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/views/pivot_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/views/kanban_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/views/calendar_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/views/qweb_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/views/basic_model_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/views/abstract_view_banner_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/views/kanban_model_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/views/view_dialogs_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/views/search_filter_menu_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/views/search_groupby_menu_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/widgets/dropdown_menu_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/views/search_panel_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/views/search_view_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/core/ajax_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/core/registry_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/core/py_utils_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/core/class_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/core/rpc_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/core/domain_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/core/data_comparison_utils_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/core/math_utils_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/core/mixins_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/core/time_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/core/concurrency_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/core/util_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/core/widget_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/core/dialog_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/core/dom_tests.js"></script>
-
-                <script type="text/javascript" src="/web/static/tests/chrome/action_manager_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/chrome/pager_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/chrome/keyboard_navigation_mixin_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/chrome/user_menu_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/chrome/systray_tests.js"></script>
-
-                <script type="text/javascript" src="/web/static/tests/widgets/company_switcher_tests.js"/>
-                <script type="text/javascript" src="/web/static/tests/widgets/data_export_tests.js"/>
-                <script type="text/javascript" src="/web/static/tests/widgets/domain_selector_tests.js"/>
-                <script type="text/javascript" src="/web/static/tests/widgets/model_field_selector_tests.js"/>
-                <script type="text/javascript" src="/web/static/tests/widgets/rainbow_man_tests.js"/>
-
-                <script type="text/javascript" src="/web/static/tests/tools/debug_manager_tests.js"/>
-
-                <script type="text/javascript" src="/web/static/tests/helpers/test_utils_tests.js"></script>
-            </t>
-
-            <div id="qunit"/>
-            <div id="qunit-fixture"/>
-        </t>
-    </template>
-
-    <template id="web.qunit_mobile_suite">
-        <t t-call="web.layout">
-            <t t-set="html_data" t-value="{'style': 'height: 100%;'}"/>
-            <t t-set="title">Web Mobile Tests</t>
-            <t t-set="head">
-                <t t-call="web.js_tests_assets"/>
-                <script type="text/javascript" src="/web/static/lib/jquery.touchSwipe/jquery.touchSwipe.js"></script>
-
-                <script type="text/javascript" src="/base/static/tests/base_settings_mobile_tests.js"></script>
-
-                <script type="text/javascript" src="/web/static/tests/chrome/action_manager_mobile_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/views/calendar_mobile_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/views/kanban_mobile_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/views/mobile_control_panel_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/fields/basic_fields_mobile_tests.js"></script>
-                <script type="text/javascript" src="/web/static/tests/fields/relational_fields_mobile_tests.js"></script>
-            </t>
-
-            <div id="qunit"/>
-            <div id="qunit-fixture"/>
-        </t>
-    </template>
-
-    <template id="web.benchmark_suite">
-        <t t-call="web.layout">
-            <t t-set="html_data" t-value="{'style': 'height: 100%;'}"/>
-            <t t-set="title">Web Benchmarks</t>
-            <t t-set="head">
-                <link type="text/css" rel="stylesheet" href="/web/static/lib/qunit/qunit-2.9.1.css"/>
-                <script type="text/javascript" src="/web/static/lib/qunit/qunit-2.9.1.js"></script>
-                <script type="text/javascript" src="/web/static/tests/helpers/qunit_config.js"></script>
-                <script type="text/javascript" src="/web/static/lib/benchmarkjs/lodash.js"></script>
-                <script type="text/javascript" src="/web/static/lib/benchmarkjs/benchmark.js"></script>
-
-                <t t-call-assets="web.assets_common" t-js="false"/>
-                <t t-call-assets="web.assets_backend" t-js="false"/>
-                <t t-call-assets="web.assets_common" t-css="false"/>
-                <t t-call-assets="web.assets_backend" t-css="false"/>
-
-                <script type="text/javascript" src="/web/static/tests/helpers/qunit_asserts.js"></script>
-
-                <script type="text/javascript">
-                    QUnit.config.hidepassed = false;
-
-                    odoo.define('web.WebClientWithoutServices', function (require) {
-                        var ServiceProviderMixin = require('web.ServiceProviderMixin');
-                        var WebClient = require('web.WebClient');
-                        var WebClientWithoutServices = WebClient.extend({
-                            /**
-                             * Patch web client so that it is no longer a service provider.
-                             *
-                             * @override
-                             */
-                            init: function () {
-                                var originalServiceProviderMixinInit = ServiceProviderMixin.init;
-                                ServiceProviderMixin.init = function () {};
-                                this._super.apply(this, arguments);
-                                ServiceProviderMixin.init = originalServiceProviderMixinInit;
-                            },
-                        });
-                        return WebClientWithoutServices;
-                    });
-                    // define the 'web.web_client' module because some other modules require it
-                    odoo.define('web.web_client', function (require) {
-                        var WebClient = require('web.WebClientWithoutServices');
-                        var web_client = new WebClient();
-                        return web_client;
-                    });
-                </script>
-
-                <style>
-                    body:not(.debug) .modal-backdrop, body:not(.debug) .modal, body:not(.debug) .ui-autocomplete {
-                        opacity: 0 !important;
-                    }
-                    #qunit-testrunner-toolbar label {
-                        font-weight: inherit;
-                        margin-bottom: inherit;
-                    }
-                    #qunit-testrunner-toolbar input[type=text] {
-                        width: inherit;
-                        display: inherit;
-                    }
-                </style>
-
-                <script type="text/javascript" src="/web/static/tests/helpers/test_utils_create.js"></script>
-                <script type="text/javascript" src="/web/static/tests/helpers/test_utils_dom.js"></script>
-                <script type="text/javascript" src="/web/static/tests/helpers/test_utils_fields.js"></script>
-                <script type="text/javascript" src="/web/static/tests/helpers/test_utils_form.js"></script>
-                <script type="text/javascript" src="/web/static/tests/helpers/test_utils_graph.js"></script>
-                <script type="text/javascript" src="/web/static/tests/helpers/test_utils_kanban.js"></script>
-                <script type="text/javascript" src="/web/static/tests/helpers/test_utils_mock.js"></script>
-                <script type="text/javascript" src="/web/static/tests/helpers/test_utils_modal.js"></script>
-                <script type="text/javascript" src="/web/static/tests/helpers/test_utils_pivot.js"></script>
-                <script type="text/javascript" src="/web/static/tests/helpers/test_utils.js"></script>
-                <script type="text/javascript" src="/web/static/tests/helpers/mock_server.js"></script>
-
-                <script type="text/javascript" src="/web/static/tests/views/list_benchmarks.js"></script>
-                <script type="text/javascript" src="/web/static/tests/views/kanban_benchmarks.js"></script>
-                <script type="text/javascript" src="/web/static/tests/views/form_benchmarks.js"></script>
-            </t>
-
-            <div id="qunit"/>
-            <div id="qunit-fixture"/>
-        </t>
     </template>
 
     <template id="web.webclient_bootstrap">

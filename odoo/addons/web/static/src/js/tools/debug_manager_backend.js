@@ -4,7 +4,6 @@ odoo.define('web.DebugManager.Backend', function (require) {
 var ActionManager = require('web.ActionManager');
 var DebugManager = require('web.DebugManager');
 var dialogs = require('web.view_dialogs');
-var startClickEverywhere = require('web.clickEverywhere');
 var config = require('web.config');
 var core = require('web.core');
 var Dialog = require('web.Dialog');
@@ -75,33 +74,6 @@ DebugManager.include({
                     });
             }
         }).open();
-    },
-    /**
-     * Runs the JS (desktop) tests
-     */
-    perform_js_tests: function () {
-        this.do_action({
-            name: _t("JS Tests"),
-            target: 'new',
-            type: 'ir.actions.act_url',
-            url: '/web/tests?mod=*'
-        });
-    },
-    /**
-     * Runs the JS mobile tests
-     */
-    perform_js_mobile_tests: function () {
-        this.do_action({
-            name: _t("JS Mobile Tests"),
-            target: 'new',
-            type: 'ir.actions.act_url',
-            url: '/web/tests/mobile?mod=*'
-        });
-    },
-    perform_click_everywhere_test: function () {
-        var $homeMenu = $("nav.o_main_navbar > a.o_menu_toggle.fa-th");
-        $homeMenu.click();
-        startClickEverywhere();
     },
 });
 
