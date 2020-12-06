@@ -29,7 +29,6 @@ setup(
         'feedparser',
         'gevent',
         'html2text',
-        'idna',
         'Jinja2',
         'lxml',  # windows binary http://www.lfd.uci.edu/~gohlke/pythonlibs/
         'libsass',
@@ -46,13 +45,13 @@ setup(
         'pypdf2',
         'pyserial',
         'python-dateutil',
-        'python-stdnum',
         'pytz',
         'pyusb >= 1.0.0b1',
         'qrcode',
         'reportlab',  # windows binary pypi.python.org/pypi/reportlab
         'requests',
         'zeep',
+        'vatnumber',
         'vobject',
         'werkzeug',
         'xlsxwriter',
@@ -64,6 +63,6 @@ setup(
         'SSL': ['pyopenssl'],
     },
     tests_require=[
-        'freezegun',
+        'mock',
     ],
 )

@@ -7,10 +7,10 @@ var Widget = require('web.Widget');
 
 var ESCAPE_KEY = $.Event("keyup", { which: 27 });
 
-async function createEmptyParent(debug) {
+function createEmptyParent(debug) {
     var widget = new Widget();
 
-    await testUtils.mock.addMockEnvironment(widget, {
+    testUtils.mock.addMockEnvironment(widget, {
         debug: debug || false,
     });
     return widget;
@@ -24,7 +24,7 @@ QUnit.module('core', {}, function () {
         assert.expect(3);
 
         var testPromise = testUtils.makeTestPromiseWithAssert(assert, 'custom callback');
-        var parent = await createEmptyParent();
+        var parent = createEmptyParent();
         new Dialog(parent, {
             buttons: [
                 {
@@ -54,7 +54,7 @@ QUnit.module('core', {}, function () {
         assert.expect(3);
 
         var testPromise = testUtils.makeTestPromiseWithAssert(assert, 'custom callback');
-        var parent = await createEmptyParent();
+        var parent = createEmptyParent();
         new Dialog(parent, {
             buttons: [
                 {
@@ -84,7 +84,7 @@ QUnit.module('core', {}, function () {
         assert.expect(3);
 
         var testPromise = testUtils.makeTestPromiseWithAssert(assert, 'confirm callback');
-        var parent = await createEmptyParent();
+        var parent = createEmptyParent();
         var options = {
             confirm_callback: testPromise.reject,
             cancel_callback: testPromise.resolve,
@@ -107,7 +107,7 @@ QUnit.module('core', {}, function () {
         assert.expect(3);
 
         var testPromise = testUtils.makeTestPromiseWithAssert(assert, 'alert callback');
-        var parent = await createEmptyParent();
+        var parent = createEmptyParent();
         var options = {
             confirm_callback: testPromise.resolve,
         };
