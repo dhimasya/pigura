@@ -3,7 +3,6 @@
 
 import ast
 import collections
-import imp
 import importlib
 import inspect
 import itertools

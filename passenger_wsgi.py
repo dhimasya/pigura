@@ -1,34 +1,27 @@
-import imp
+import importlib
 import os
 import sys
-
 
 sys.path.insert(0, os.path.dirname(__file__))
 
 import odoo
-
-#----------------------------------------------------------
-# Common
-#----------------------------------------------------------
-# odoo.multi_process = True # Nah!
-
-# Equivalent of --load command-line option
-odoo.conf.server_wide_modules = ['base', 'web']
 conf = odoo.tools.config
 
-# Path to the OpenERP Addons repository (comma-separated for
-# multiple locations)
+# ???
+# odoo.multi_process = True # Nah!
 
-# conf['addons_path'] = '../../addons/trunk,../../web/trunk/addons'
-
-# Optional database config if not using local socket
+# Database
 conf['db_host'] = 'localhost'
-conf['db_name'] = 'name'
-conf['db_user'] = 'user'
 conf['db_port'] = 5432
+conf['db_user'] = 'user'
 conf['db_password'] = 'pass'
+conf['db_name'] = 'db'
 
-#----------------------------------------------------------
-# Generic WSGI handlers application
-#----------------------------------------------------------
+# Modules
+# conf['addons_path'] = '/addons/path,/other/addons/path'
+
+# Debugging
+# conf['dev'] = 'reload,qweb,werkzeug,xml'
+
+# WSGI Entrypoint
 application = odoo.service.wsgi_server.application
