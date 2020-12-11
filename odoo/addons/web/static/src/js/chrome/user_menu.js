@@ -60,30 +60,6 @@ var UserMenu = Widget.extend({
     /**
      * @private
      */
-    _onMenuAccount: function () {
-        var self = this;
-        this.trigger_up('clear_uncommitted_changes', {
-            callback: function () {
-                self._rpc({route: '/web/session/account'})
-                    .then(function (url) {
-                        framework.redirect(url);
-                    })
-                    .guardedCatch(function (result, ev){
-                        ev.preventDefault();
-                        framework.redirect('https://accounts.odoo.com/account');
-                    });
-            },
-        });
-    },
-    /**
-     * @private
-     */
-    _onMenuDocumentation: function () {
-        window.open('https://www.odoo.com/documentation/user', '_blank');
-    },
-    /**
-     * @private
-     */
     _onMenuLogout: function () {
         this.trigger_up('clear_uncommitted_changes', {
             callback: this.do_action.bind(this, 'logout'),
@@ -107,12 +83,6 @@ var UserMenu = Widget.extend({
                     });
             },
         });
-    },
-    /**
-     * @private
-     */
-    _onMenuSupport: function () {
-        window.open('https://www.odoo.com/buy', '_blank');
     },
     /**
      * @private

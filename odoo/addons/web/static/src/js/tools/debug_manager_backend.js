@@ -4,7 +4,6 @@ odoo.define('web.DebugManager.Backend', function (require) {
 var ActionManager = require('web.ActionManager');
 var DebugManager = require('web.DebugManager');
 var dialogs = require('web.view_dialogs');
-var startClickEverywhere = require('web.clickEverywhere');
 var config = require('web.config');
 var core = require('web.core');
 var Dialog = require('web.Dialog');
@@ -76,33 +75,6 @@ DebugManager.include({
             }
         }).open();
     },
-    /**
-     * Runs the JS (desktop) tests
-     */
-    perform_js_tests: function () {
-        this.do_action({
-            name: _t("JS Tests"),
-            target: 'new',
-            type: 'ir.actions.act_url',
-            url: '/web/tests?mod=*'
-        });
-    },
-    /**
-     * Runs the JS mobile tests
-     */
-    perform_js_mobile_tests: function () {
-        this.do_action({
-            name: _t("JS Mobile Tests"),
-            target: 'new',
-            type: 'ir.actions.act_url',
-            url: '/web/tests/mobile?mod=*'
-        });
-    },
-    perform_click_everywhere_test: function () {
-        var $homeMenu = $("nav.o_main_navbar > a.o_menu_toggle.fa-th");
-        $homeMenu.click();
-        startClickEverywhere();
-    },
 });
 
 /**
@@ -110,28 +82,6 @@ DebugManager.include({
  * (window action)
  */
 DebugManager.include({
-    async start() {
-        const [_, canSeeRecordRules, canSeeModelAccess] = await Promise.all([
-            this._super(...arguments),
-            this._checkAccessRight('ir.rule', 'read'),
-            this._checkAccessRight('ir.model.access', 'read'),
-        ])
-        this.canSeeRecordRules = canSeeRecordRules;
-        this.canSeeModelAccess = canSeeModelAccess;
-    },
-    /**
-     * Return the ir.model id from the model name
-     * @param {string} modelName
-     */
-    async getModelId(modelName) {
-        const [modelId] = await this._rpc({
-            model: 'ir.model',
-            method: 'search',
-            args: [[['model', '=', modelName]]],
-            kwargs: { limit: 1},
-        });
-        return modelId
-    },
     /**
      * Updates current action (action descriptor) on tag = action,
      */
@@ -158,17 +108,24 @@ DebugManager.include({
             flags: {action_buttons: true, headless: true}
         });
     },
-    async get_view_fields () {
-        const modelId = await this.getModelId(this._action.res_model);
-        this.do_action({
-            res_model: 'ir.model.fields',
-            name: _t('View Fields'),
-            views: [[false, 'list'], [false, 'form']],
-            domain: [['model_id', '=', modelId]],
-            type: 'ir.actions.act_window',
-            context: {
-                'default_model_id': modelId
-            }
+    get_view_fields: function () {
+        var model = this._action.res_model,
+            self = this;
+        this._rpc({
+            model: 'ir.model',
+            method: 'search',
+            args: [[['model', '=', model]]]
+        }).then(function (ids) {
+            self.do_action({
+                res_model: 'ir.model.fields',
+                name: _t('View Fields'),
+                views: [[false, 'list'], [false, 'form']],
+                domain: [['model_id', '=', model]],
+                type: 'ir.actions.act_window',
+                context: {
+                    'default_model_id': ids[0]
+                }
+            });
         });
     },
     manage_filters: function () {
@@ -190,33 +147,7 @@ DebugManager.include({
                 args: [this._action.res_model],
             })
             .then(this.do_action);
-    },
-    async actionRecordRules() {
-        const modelId = await this.getModelId(this._action.res_model);
-        this.do_action({
-            res_model: 'ir.rule',
-            name: _t('Model Record Rules'),
-            views: [[false, 'list'], [false, 'form']],
-            domain: [['model_id', '=', modelId]],
-            type: 'ir.actions.act_window',
-            context: {
-                'default_model_id': modelId,
-            },
-        });
-    },
-    async actionModelAccess() {
-        const modelId = await this.getModelId(this._action.res_model);
-        this.do_action({
-            res_model: 'ir.model.access',
-            name: _t('Model Access'),
-            views: [[false, 'list'], [false, 'form']],
-            domain: [['model_id', '=', modelId]],
-            type: 'ir.actions.act_window',
-            context: {
-                'default_model_id': modelId,
-            },
-        });
-    },
+    }
 });
 
 /**
@@ -229,7 +160,11 @@ DebugManager.include({
         this._can_edit_views = false;
         return Promise.all([
             this._super(),
-            this._checkAccessRight('ir.ui.view', 'write')
+            this._rpc({
+                    model: 'ir.ui.view',
+                    method: 'check_access_rights',
+                    kwargs: {operation: 'write', raise_exception: false},
+                })
                 .then(function (ar) {
                     this._can_edit_views = ar;
                 }.bind(this))
@@ -245,7 +180,7 @@ DebugManager.include({
                 action: this._action,
                 can_edit: this._can_edit_views,
                 controller: this._controller,
-                withControlPanel: this._controller && this._controller.withControlPanel,
+                controlPanelView: this._controller && this._controller._controlPanel,
                 manager: this,
                 view: this._controller && _.findWhere(this._action.views, {
                     type: this._controller.viewType,
@@ -728,14 +663,11 @@ if (config.isDebug()) {
          */
         current_action_updated: function (action, controller) {
             this._super.apply(this, arguments);
-            this.update_debug_manager(action, controller);
-        },
-        update_debug_manager: function(action, controller) {
             var debugManager = _.find(this.menu.systray_menu.widgets, function(item) {
                 return item instanceof DebugManager;
             });
             debugManager.update('action', action, controller && controller.widget);
-        }
+        },
     });
 
     ActionManager.include({
